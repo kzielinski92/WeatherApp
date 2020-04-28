@@ -56,9 +56,7 @@ class WeatherController: UITableViewController {
         .disposed(by: disposeBag)
 
         let currentWeather = vm.weather.map { $0.current}
-        .debug("Weather")
             .share(replay: 1)
-            .debug("Current weather")
         
         currentWeather.map { "\($0.temp)°C" }
             .asDriver(onErrorJustReturn: "")
