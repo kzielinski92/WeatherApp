@@ -49,6 +49,7 @@ class DefaultOpenWeatherAPI: OpenWeatherAPI {
         req.httpMethod = "GET"
         req.url = urlComponents.url!
         req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        req.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
         
         let request: Observable<URLRequest> = Observable.just(req)
         

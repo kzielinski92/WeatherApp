@@ -35,14 +35,15 @@ class WeatherViewModel  {
         let loading = ActivityIndicator()
         self.loading = loading.asObservable()
         
+        
+        
         self.weather = Observable.combineLatest(refresh.startWith(()), location)
             .flatMapLatest { _, location in
                 return API.weather(for: location)
-                    .observeOn(MainScheduler.instance)
                     .catchErrorJustReturn(WeatherModel.empty())
                     .trackActivity(loading)
+                    .take(1)
         }
-        .share(replay: 1)
         
         locationManager.distanceFilter = kCLDistanceFilterNone
         locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
